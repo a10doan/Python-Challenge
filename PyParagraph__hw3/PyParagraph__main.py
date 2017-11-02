@@ -1,10 +1,10 @@
 import re
-#re.split("(?&lt;=[.!?]) +", paragraph)
+
 
 
 pFiction = open('paragraph_1.txt', 'r')
 
-print(pFiction)
+#print(pFiction)
 
 pFiction_rd = pFiction.read()
 
@@ -14,9 +14,9 @@ print("Approximate Word Count: " + str(len(pFiction_array)))
 
 #sentences = re.split("[.]|[!]|[?]", pFiction_rd)
 sentences = re.split(r'[.!?]+', pFiction_rd)
-print(sentences)
+#print(sentences)
 
-print("Approximate Sentence Count: " + str(len(sentences)))
+print("Approximate Sentence Count: " + str(len(sentences)-1))
 
 wordCountArray = []
 for each in pFiction_array:
@@ -28,7 +28,7 @@ for each in wordCountArray:
 
 print("Average Letter Count: " + str(totalLetters/(len(wordCountArray))))
 
-average_sentence_length = len(pFiction_array)/len(sentences)
+average_sentence_length = len(pFiction_array)/(len(sentences)-1)
 
 print("Average Sentence Length: " + str(average_sentence_length))
 
