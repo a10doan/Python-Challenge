@@ -47,14 +47,20 @@ with open(csvpath, newline='') as csvfile:
     for each in date_array:
         #DOB_array.append(''.join(each.split('-')))
         DOB_array.append(each.split('-'))
-    order = [2, 1, 0]
+    order = [1, 2, 0]
     for each2 in DOB_array:
         each2 = [each2[i] for i in order]
         DOB_array_re.append(each2)
     for each3 in DOB_array_re:
         DOB_array_re2.append("/".join(each3[0:4]))
+    
+    ssn_array_adj = []
+    ssn_array.pop(0)
+    for each in ssn_array:
+        ssn_array_adj.append(each.split('-'))
 
-
+    print(ssn_array_adj[0:5])
+    print(ssn_array_adj[0][2])
     print(first_last[0:5])
     print(DOB_array[0:5])
     print(DOB_array_re[0:5])
@@ -64,14 +70,16 @@ with open(csvpath, newline='') as csvfile:
     ID_array.pop(0)
     i = 0
     for each in ID_array:
-        emp_dict[each] = [first_last[i][1], first_last[i][0]]
+        emp_dict[each] = [first_last[i][1], first_last[i][0], DOB_array_re2[i],
+                            "***-**-"+ssn_array_adj[i][2]]
         i += 1
 
     x = 0
     for key in emp_dict:
-        while x <5:
-            print(key, emp_dict[key])
-            x += 1
+        print(key, emp_dict[key])
+        x += 1
+        if x > 5:
+            break
 
 
 
