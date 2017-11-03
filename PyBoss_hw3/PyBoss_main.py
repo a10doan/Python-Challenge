@@ -58,6 +58,7 @@ csvpath = "employee_data1.csv"
 with open(csvpath, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
 
+#STORING ALL THE DIFFERENT COLUMNS INTO DIFFERENT ARRAYS
     ID_array = []
     name_array = [] 
     date_array = []
@@ -82,23 +83,23 @@ with open(csvpath, newline='') as csvfile:
     for each in csvreader:
         state_array.append(each[4])
 
-    #print(ID_array[1:3])
-    #print(name_array[1:3])
 
 with open(csvpath, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
 
+#SETTING UP THE NAME ARRAY, AND SPLITTING THE FIRST AND LAST NAMES INTO A NEW ARRAY
     first_last = []
     name_array.pop(0)
     for _ in name_array:
         first_last.append(_.split(' '))
 
+#ADJUSTING THE DOB ARRAY, HAD TO USE 3 DIFFERENT ARRAYS: ONE FOR THE SPLIT,
+#ANOTHER FOR ADJUSTING THE ORDER, AND A THIRD ARRAY FOR ADDING THE '/'
     DOB_array = []
     DOB_array_re = []
     DOB_array_re2 = []
     date_array.pop(0)
     for each in date_array:
-        #DOB_array.append(''.join(each.split('-')))
         DOB_array.append(each.split('-'))
     order = [1, 2, 0]
     for each2 in DOB_array:
@@ -106,52 +107,77 @@ with open(csvpath, newline='') as csvfile:
         DOB_array_re.append(each2)
     for each3 in DOB_array_re:
         DOB_array_re2.append("/".join(each3[0:4]))
-    
+
+#ADJUSTING THE SSN FOR EACH EMPLOYEE, USING TWO ARRAYS
     ssn_array_adj = []
     ssn_array.pop(0)
     for each4 in ssn_array:
         ssn_array_adj.append(each4.split('-'))
     
+#ADJUST THE STATE ARRAY, CALLING THE ABBREV DICTIONARY FROM *HINTS*
     state_array.pop(0)
     state_array_adj = []
     for each5 in state_array:
         state_array_adj.append(us_state_abbrev[each5])
 
-    print(state_array_adj[0:5])
-    print(ssn_array_adj[0:5])
-    print(ssn_array_adj[0][2])
-    print(first_last[0:5])
-    print(DOB_array[0:5])
-    print(DOB_array_re[0:5])
-    print(DOB_array_re2[0:5])
-    
+#JUST SOME ERROR CHECKING CODE, PRINTING TO SCREEN TO CHECK FOR ERRORS
+    #print(state_array_adj[0:5])
+    #print(ssn_array_adj[0:5])
+    #print(ssn_array_adj[0][2])
+    #print(first_last[0:5])
+    #print(DOB_array[0:5])
+    #print(DOB_array_re[0:5])
+    #print(DOB_array_re2[0:5])
+#CREATING THE DICTIONARY AND STORING ALL INFORMATION, USING EMPLOYEE ID NUMBER AS THE KEY
     emp_dict = {}
     ID_array.pop(0)
     i = 0
     for each in ID_array:
-        emp_dict[each] = [first_last[i][1], first_last[i][0], DOB_array_re2[i],
+        emp_dict[each] = [first_last[i][0], first_last[i][1], DOB_array_re2[i],
                             "***-**-"+ssn_array_adj[i][2], state_array_adj[i]]
         i += 1
-
-    x = 0
-    for key in emp_dict:
-        print(key, end=',')
-        #print(emp_dict[key][0], end='\n')
-        print(emp_dict[key][0], end=',')
-        print(emp_dict[key][1], end=',')
-        print(emp_dict[key][2], end=',')
-        print(emp_dict[key][3], end=',')
-        print(emp_dict[key][4], end='\n')
-        x += 1
-        if x > 5:
-            break
-
-
-
-    
+#JUST SOME ERROR CHECKING CODE, COMMENTED OUT SINCE THE PROGRAM SEEMS TO BE WORKING
+    #x = 0
+    #for key in emp_dict:
+    #    print(key, end=',')
+    #    print(emp_dict[key][0], end=',')
+    #    print(emp_dict[key][1], end=',')
+    #    print(emp_dict[key][2], end=',')
+    #    print(emp_dict[key][3], end=',')
+    #    print(emp_dict[key][4], end='\n')
+    #    x += 1
+    #    if x > 5:
+    #        break
 csvfile.close()
 
+#WRITING TO TEXT FILE
 
+with open("Output_PyBoss.txt", "w") as txt_file:
+    txt_file.write('Emp ID')
+    txt_file.write(',')
+    txt_file.write('First Name')
+    txt_file.write(',')
+    txt_file.write('Last Name')
+    txt_file.write(',')
+    txt_file.write('DOB')
+    txt_file.write(',')
+    txt_file.write('SSN')
+    txt_file.write(',')
+    txt_file.write('State')
+    txt_file.write('\n')
+    for key in emp_dict:
+        txt_file.write(key)
+        txt_file.write(',')
+        txt_file.write(emp_dict[key][0])
+        txt_file.write(',')
+        txt_file.write(emp_dict[key][1])
+        txt_file.write(',')
+        txt_file.write(emp_dict[key][2])
+        txt_file.write(',')
+        txt_file.write(emp_dict[key][3])
+        txt_file.write(',')
+        txt_file.write(emp_dict[key][4])
+        txt_file.write('\n')
 
 
 
