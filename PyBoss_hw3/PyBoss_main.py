@@ -1,5 +1,58 @@
 import csv
 
+us_state_abbrev = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Pennsylvania': 'PA',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY',
+}
+
 csvpath = "employee_data1.csv"
 
 with open(csvpath, newline='') as csvfile:
@@ -56,9 +109,15 @@ with open(csvpath, newline='') as csvfile:
     
     ssn_array_adj = []
     ssn_array.pop(0)
-    for each in ssn_array:
-        ssn_array_adj.append(each.split('-'))
+    for each4 in ssn_array:
+        ssn_array_adj.append(each4.split('-'))
+    
+    state_array.pop(0)
+    state_array_adj = []
+    for each5 in state_array:
+        state_array_adj.append(us_state_abbrev[each5])
 
+    print(state_array_adj[0:5])
     print(ssn_array_adj[0:5])
     print(ssn_array_adj[0][2])
     print(first_last[0:5])
@@ -71,12 +130,18 @@ with open(csvpath, newline='') as csvfile:
     i = 0
     for each in ID_array:
         emp_dict[each] = [first_last[i][1], first_last[i][0], DOB_array_re2[i],
-                            "***-**-"+ssn_array_adj[i][2]]
+                            "***-**-"+ssn_array_adj[i][2], state_array_adj[i]]
         i += 1
 
     x = 0
     for key in emp_dict:
-        print(key, emp_dict[key])
+        print(key, end=',')
+        #print(emp_dict[key][0], end='\n')
+        print(emp_dict[key][0], end=',')
+        print(emp_dict[key][1], end=',')
+        print(emp_dict[key][2], end=',')
+        print(emp_dict[key][3], end=',')
+        print(emp_dict[key][4], end='\n')
         x += 1
         if x > 5:
             break
