@@ -7,7 +7,8 @@ import csv
 with open(csvpath, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
 
-#Counting number of months in the csv file, then adjust it for the title
+# Counting number of months in the csv file, then adjust the count (-1) for the title row
+# Then prints out the total number of months
     months_count = 0
     monthsArray = []
     for date in csvreader:
@@ -20,7 +21,10 @@ csvfile.close()
 with open(csvpath, 'r') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     
-#Creating a new list for calculating total revenues
+# Creating a new list for calculating total revenues, a list is created to store the list
+# of revenues starting at row[1] (that is where the revenue numbers are stored in the CSV file)
+# First for loop appends the revenue values, then the second for-loop iterates through each
+# item to sum each item.  Then prints the total revenue values.
     revenue_list = []
     totalRevenue = 0
     for row in csvreader:
@@ -47,7 +51,7 @@ with open(csvpath, 'r') as csvfile:
 #The other, will be used to calculate the total change (fluctuation) of revenues.
 #The idea is that, if revenues at month 1 is 1 dollar, and month 2 is 10 dollars, then
 #if month 3 is back to 1 dollar again, then the average change considered to be 9 dollars,
-#and NOT 0 (-9 + 9).  Hence absolute value is required.
+#and NOT 0 (-9 + 9).  Hence ABSOLUTE VALUE is required.
     tupleZipArray = [b-a for a,b in (zip(revDifArray, revDifArrayShift))]
     tupleZipArrayAbs = [abs(y-x) for x,y in zip(revDifArray, revDifArrayShift)]
 
