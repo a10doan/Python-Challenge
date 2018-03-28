@@ -7,7 +7,10 @@ import csv
 with open(csvpath, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
 
-#Finding out the total number of votes cast
+################################################################################
+# Finding out the total number of votes cast
+################################################################################
+
     totalVotes = 0
     for each in csvreader:
         totalVotes += 1
@@ -15,10 +18,11 @@ csvfile.close()
 
 with open(csvpath, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
-
+##################################################################################
 # Creating a list of candidate names, then pop the title row, call 'set' to find
 # unique candidates.  Since set is not a iterrable list, we type cast to a list.  The
 # list will be different every time, so we use a dictionary to call those key variables
+##################################################################################   
     candidateArray = []
     for candidate in csvreader:
         candidateArray.append(candidate[2])
@@ -26,21 +30,28 @@ with open(csvpath, newline='') as csvfile:
     candidateArray.pop(0)
     unique_candidates = list(set(candidateArray))
 
+##################################################################################
 # To count the total votes per candidate, we call each item in the unique_candidate list
 # if the name in the candidateArray matches to the item in the unique_candidate list,
 # then we add a +1 to the count.  So each candidate will have a total vote count associated with
-# their key(name).
+# their key(name).  Empty dictionary created to store keys and respective values.
+###################################################################################
+
     mydict = {}
+
     for each_uniq in unique_candidates:
         votes = 0
         for aa in candidateArray:
             if aa == each_uniq:
                 votes += 1
             mydict[each_uniq] = votes
-
+            
+####################################################################################
 # This for-loop will loop through the keys (names) and associated values (total votes).  Then
 # appending another value (percentage of total votes) to the key, in the second position of the list,
 # next to the total votes.
+####################################################################################
+
     for key, value in mydict.items():
         percent_of = mydict[key]/(totalVotes-1)
         #mydict[key] = [value, percent_of]

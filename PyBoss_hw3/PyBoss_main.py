@@ -57,8 +57,9 @@ csvpath = "employee_data1.csv"
 
 with open(csvpath, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
-
-#STORING ALL THE DIFFERENT COLUMNS INTO DIFFERENT ARRAYS
+#####################################################################
+# STORING ALL THE DIFFERENT COLUMNS INTO DIFFERENT ARRAYS
+#####################################################################
     ID_array = []
     name_array = [] 
     date_array = []
@@ -86,15 +87,18 @@ with open(csvpath, newline='') as csvfile:
 
 with open(csvpath, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
-
-#SETTING UP THE NAME ARRAY, AND SPLITTING THE FIRST AND LAST NAMES INTO A NEW ARRAY
+#####################################################################################
+# SETTING UP THE NAME ARRAY, AND SPLITTING THE FIRST AND LAST NAMES INTO A NEW ARRAY,
+# THEREBY FORMING A LIST (FIRST, LAST) WITHIN A LIST
+#####################################################################################
     first_last = []
     name_array.pop(0)
     for _ in name_array:
         first_last.append(_.split(' '))
-
-#ADJUSTING THE DOB ARRAY, HAD TO USE 3 DIFFERENT ARRAYS: ONE FOR THE SPLIT,
-#ANOTHER FOR ADJUSTING THE ORDER, AND A THIRD ARRAY FOR ADDING THE '/'
+#####################################################################################
+# ADJUSTING THE DOB ARRAY, HAD TO USE 3 DIFFERENT ARRAYS: ONE FOR THE SPLIT,
+# ANOTHER FOR ADJUSTING THE ORDER, AND A THIRD ARRAY FOR ADDING THE '/'
+#####################################################################################
     DOB_array = []
     DOB_array_re = []
     DOB_array_re2 = []
@@ -107,28 +111,26 @@ with open(csvpath, newline='') as csvfile:
         DOB_array_re.append(each2)
     for each3 in DOB_array_re:
         DOB_array_re2.append("/".join(each3[0:4]))
-
-#ADJUSTING THE SSN FOR EACH EMPLOYEE, USING TWO ARRAYS
+#####################################################################################
+# ADJUSTING THE SSN FOR EACH EMPLOYEE, USING TWO ARRAYS (ONE IS ORIGINAL, ANOTHER IS ADJUSTED)
+#####################################################################################
     ssn_array_adj = []
     ssn_array.pop(0)
     for each4 in ssn_array:
         ssn_array_adj.append(each4.split('-'))
-    
-#ADJUST THE STATE ARRAY, CALLING THE ABBREV DICTIONARY FROM *HINTS*
+
+#####################################################################################
+# ADJUST THE STATE ARRAY, CALLING THE ABBREV DICTIONARY FROM *HINTS*
+# "each5" IS KEY THAT CALLS THE VALUE FROM DICTIONARY, STORES IN ANOTHER ARRAY
+#####################################################################################
     state_array.pop(0)
     state_array_adj = []
     for each5 in state_array:
         state_array_adj.append(us_state_abbrev[each5])
-
-#JUST SOME ERROR CHECKING CODE, PRINTING TO SCREEN TO CHECK FOR ERRORS
-    #print(state_array_adj[0:5])
-    #print(ssn_array_adj[0:5])
-    #print(ssn_array_adj[0][2])
-    #print(first_last[0:5])
-    #print(DOB_array[0:5])
-    #print(DOB_array_re[0:5])
-    #print(DOB_array_re2[0:5])
-#CREATING THE DICTIONARY AND STORING ALL INFORMATION, USING EMPLOYEE ID NUMBER AS THE KEY
+######################################################################################
+# CREATING THE DICTIONARY AND STORING ALL INFORMATION, USING EMPLOYEE ID NUMBER AS THE KEY
+# "each" IN "ID_array" IS THE EMPLOYEE ID NUMBER.  VALUES ARE ASSIGNED TO THE KEY AS A LIST
+######################################################################################
     emp_dict = {}
     ID_array.pop(0)
     i = 0
@@ -136,21 +138,11 @@ with open(csvpath, newline='') as csvfile:
         emp_dict[each] = [first_last[i][0], first_last[i][1], DOB_array_re2[i],
                             "***-**-"+ssn_array_adj[i][2], state_array_adj[i]]
         i += 1
-#JUST SOME ERROR CHECKING CODE, COMMENTED OUT SINCE THE PROGRAM SEEMS TO BE WORKING
-    #x = 0
-    #for key in emp_dict:
-    #    print(key, end=',')
-    #    print(emp_dict[key][0], end=',')
-    #    print(emp_dict[key][1], end=',')
-    #    print(emp_dict[key][2], end=',')
-    #    print(emp_dict[key][3], end=',')
-    #    print(emp_dict[key][4], end='\n')
-    #    x += 1
-    #    if x > 5:
-    #        break
 csvfile.close()
 
-#WRITING TO TEXT FILE
+###############################################################################
+# WRITING TO TEXT FILE (CSV)
+###############################################################################
 
 with open("Output_PyBoss.txt", "w") as txt_file:
     txt_file.write('Emp ID')
