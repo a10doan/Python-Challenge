@@ -1,4 +1,4 @@
-## Unit 3 | Assignment - Python Exercises
+## Unit 3 | Python Exercises
 
 Skills tested: Python (loops, conditional statements, iterating CSV files)
 
